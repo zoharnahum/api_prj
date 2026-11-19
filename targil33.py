@@ -4,6 +4,9 @@ import win32con
 
 
 def get_clipboard_text():
+    '''
+    :return: מחרוזת עם תוכן הלוח או מחרוזת ריקה במקרה של שגיאה / היעדר טקסט
+    '''
     text = ""
     try:
         win32clipboard.OpenClipboard()
@@ -11,16 +14,18 @@ def get_clipboard_text():
             text = win32clipboard.GetClipboardData(win32con.CF_UNICODETEXT)
     except Exception as e:
         pass
-    finally:
-        try:
-            win32clipboard.CloseClipboard()
-        except Exception:
-            pass
-
+    try:
+        win32clipboard.CloseClipboard()
+    except Exception as e:
+        pass
     return text
 
 
 def monitor_clipboard():
+    '''
+    :return: none
+     העוקב אחר שינויים בלוח העתיק ומדפיסה כל טקסט חדש שהועתק.
+    '''
     last_text = ""
     while True:
         current_text = get_clipboard_text()
@@ -29,6 +34,7 @@ def monitor_clipboard():
             print(f"\nהועתק טקסט חדש:\n{current_text}")
             print("-" * 30)
         time.sleep(0.5)
+
 
 
 if __name__ == "__main__":
