@@ -5,7 +5,7 @@ import win32con
 
 def get_clipboard_text():
     '''
-    :return: מחרוזת עם תוכן הלוח או מחרוזת ריקה במקרה של שגיאה / היעדר טקסט
+    :return:מחזיר מחרוזת עם תוכן הלוח או מחרוזת ריקה במקרה של שגיאה / היעדר טקסט
     '''
     text = ""
     try:
@@ -24,15 +24,14 @@ def get_clipboard_text():
 def monitor_clipboard():
     '''
     :return: none
-     העוקב אחר שינויים בלוח העתיק ומדפיסה כל טקסט חדש שהועתק.
+     עוקב אחר שינויים בלוח העתיק ומדפיסה כל טקסט חדש שהועתק
     '''
     last_text = ""
     while True:
         current_text = get_clipboard_text()
         if current_text and current_text != last_text:
             last_text = current_text
-            print(f"\nהועתק טקסט חדש:\n{current_text}")
-            print("-" * 30)
+            print(current_text)
         time.sleep(0.5)
 
 
